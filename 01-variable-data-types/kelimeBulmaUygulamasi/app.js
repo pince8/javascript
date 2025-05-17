@@ -48,12 +48,46 @@ function rafOlustur(){
     console.clear();
     let satir="";
     for(let i=0; i<raflar.length; i++){
-        for(let j=0; j<raflar.length; j++){
-            satir +="|" +(raflar[i][j].goster ? raflar[i][j].kod : "----")+"|";
+        for(let j=0; j<5; j++){
+            satir +="|" +(raflar[i][j].goster ? raflar[i][j].kod : "----")+"";
         }
         console.log(satir);
+        console.log("----------------------");
         satir="";
     }
 }
 
+
+function kodBul(kitapIsmi){
+    let rafKod=null;
+    kitaplar.forEach(function(kitap){
+        if(kitap.isim.toUpperCase().includes(kitapIsmi.toUpperCase(),0)){
+            rafKod = kitap.raf;
+        }
+    });
+    return rafKod;
+}
+
+function raftaGoster(rafKodu){
+    for(let i=0;i<raflar.length;i++){
+        for(let j=0;j<5;j++){
+            if(raflar[i][j].kod==rafKodu){
+                raflar[i][j].goster=true;
+                break;
+            }
+        }
+    }
+}
+
 rafOlustur();
+
+let kitapIsmi = prompt("Lütfen bir kitap ismi giriniz.");
+let rafKod = kodBul(kitapIsmi);
+
+if(rafKod!=null){
+    raftaGoster(rafKod);
+    rafOlustur();
+
+}else{
+    alert("Girdiğiniz kitap kütüphanemizde bulunmamaktadır.");
+}
