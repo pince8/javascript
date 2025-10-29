@@ -16,6 +16,7 @@ function runEvents() {
     //Sayfa yüklendiğinde
     document.addEventListener("DOMContentLoaded", pageLoaded);
     secondCardBody.addEventListener("click", removeTodoToUI);
+    clearButton.addEventListener("click", allTodosEveryWhere);
 }
 
 function pageLoaded() {
@@ -25,6 +26,22 @@ function pageLoaded() {
     })
 }
 
+function allTodosEveryWhere() {
+    const todoListesi = document.querySelectorAll(".list-group-item");
+    if (todoListesi.length > 0) {
+        //Ekrandan Silme
+        todoListesi.forEach(function (todo) {
+            todo.remove();
+        });
+
+        //Storage'dan Silme
+        todos = [];
+        localStorage.setItem("todos", JSON.stringify(todos));
+        showAlert("success", "Başarılı bir şekilde silindi.");
+    } else {
+        showAlert("warning", "Silebilmeniz için ilk önce bir değer ekleyiniz.");
+    }
+}
 function removeTodoToUI(e) {
     if (e.target.className === "fa fa-remove") {
 
