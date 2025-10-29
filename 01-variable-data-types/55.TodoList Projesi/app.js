@@ -27,10 +27,26 @@ function pageLoaded() {
 
 function removeTodoToUI(e) {
     if (e.target.className === "fa fa-remove") {
+
+        //Ekrandan silme
         const todo = e.target.parentElement.parentElement;
         todo.remove();
+
+        //Storagden silme
+        removeTodoToStorage(todo.textContent);
         showAlert("success", "Todo başarıyla silindi.");
     }
+}
+
+function removeTodoToStorage(removeTodo) {
+    checkTodosFromStorage();
+    todos.forEach(function (todo, index) {
+        if (todo === removeTodo) {
+            //siler o indexten başlayıp hangi rakam yazıldıysa o rakam kadar siler
+            todos.splice(index, 1)
+        }
+    });
+    localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function addTodo(e) {
