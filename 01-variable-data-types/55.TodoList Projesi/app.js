@@ -6,6 +6,7 @@ const todoList = document.querySelector(".list-group");
 const firstCardBody = document.querySelectorAll(".card-body")[0];
 const secondCardBody = document.querySelectorAll(".card-body")[1];
 const clearButton = document.querySelector("#clearButton");
+const filterInput = document.querySelector("#todoSearch");
 
 let todos = [];
 
@@ -17,6 +18,7 @@ function runEvents() {
     document.addEventListener("DOMContentLoaded", pageLoaded);
     secondCardBody.addEventListener("click", removeTodoToUI);
     clearButton.addEventListener("click", allTodosEveryWhere);
+    filterInput.addEventListener("keyup", filter);
 }
 
 function pageLoaded() {
@@ -26,6 +28,25 @@ function pageLoaded() {
     })
 }
 
+function filter(e) {
+    const filterValue = e.target.value.toLowerCase().trim();
+    const todoListesi = document.querySelectorAll(".list-group-item");
+
+    if (todoListesi.length > 0) {
+
+        todoListesi.forEach(function (todo) {
+            if (todo.textContent.toLowerCase().trim().includes(filterValue)) {
+                todo.setAttribute("style", "display : block");
+            }
+            else {
+                todo.setAttribute("style", "display : none !important");
+            }
+        });
+    } else {
+        showAlert("Todo bulunmamaktadır arama için ilk önce todo ekleyiniz.")
+    }
+
+}
 function allTodosEveryWhere() {
     const todoListesi = document.querySelectorAll(".list-group-item");
     if (todoListesi.length > 0) {
